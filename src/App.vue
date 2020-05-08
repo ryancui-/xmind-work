@@ -1,28 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>{{ bills }}</div>
+    <div>{{ categories }}</div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import bills from '@/assets/bill.csv'
+import categories from '@/assets/categories.csv'
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  computed: {
+    ...mapState(['bills', 'categories'])
+  },
+  created() {
+    this.$store.commit('INIT', { bills, categories })
   }
 }
 </script>
 
 <style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html, body, #app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

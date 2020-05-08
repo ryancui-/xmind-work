@@ -1,31 +1,17 @@
 # xmind-interview
 
-## Project setup
-```
-npm install
+## 运行
+
+在浏览器打开 `dist/index.html` 即可。
+
+## 开发
+
+```bash
+npm install && npm run serve
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 测试
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
+```bash
+npm test
 ```
