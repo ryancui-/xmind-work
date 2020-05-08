@@ -10,12 +10,19 @@ export default new Vuex.Store({
     bills: [],
     categoryMap: {},
     categories: [],
-    filters: []
+    activeMonth: null,
+    activeCategoryId: null
   },
   getters: {
     showBills(state) {
-      // TODO: Filter it first
-      const filteredBills = state.bills
+      let filteredBills = state.bills
+      if (state.activeMonth) {
+        filteredBills = filteredBills.filter(_ => dayjs(_.time).month() === state.activeMonth)
+      }
+      if (state.activeCategoryId) {
+        filteredBills = filteredBills.filter(_ => _.category === state.activeCategoryId)
+      }
+
       return filteredBills.map(({ type, time, category, amount }) => {
         return {
           id: `${time}_${category}_${amount}`,
@@ -25,6 +32,9 @@ export default new Vuex.Store({
           amount
         }
       })
+    },
+    availableMonths(state) {
+      return [...new Set(state.bills.map(_ => dayjs(_.time).month()))]
     }
   },
   mutations: {
@@ -35,6 +45,12 @@ export default new Vuex.Store({
       state.categories.forEach(({ id, type, name }) => {
         state.categoryMap[id] = { type, name }
       })
+    },
+    SET_MONTH(state, month) {
+      state.activeMonth = month
+    },
+    SET_CATEGORY_ID(state, categoryId) {
+      state.activeCategoryId = categoryId
     }
   },
   actions: {
