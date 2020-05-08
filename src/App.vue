@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-    <div>{{ bills }}</div>
-    <div>{{ categories }}</div>
+    <bill-table :bills="showBills" />
   </div>
 </template>
 
 <script>
 import bills from '@/assets/bill.csv'
 import categories from '@/assets/categories.csv'
-import { mapState } from 'vuex'
+import BillTable from '@/components/BillTable'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'app',
+  components: {
+    BillTable
+  },
   computed: {
-    ...mapState(['bills', 'categories'])
+    ...mapGetters(['showBills'])
   },
   created() {
     this.$store.commit('INIT', { bills, categories })
