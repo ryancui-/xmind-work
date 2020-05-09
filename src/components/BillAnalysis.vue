@@ -1,12 +1,27 @@
 <template>
   <div class="bill-analysis">
-    Bill Analysis.
+    <div class="bill-analysis__in-out">
+      <span>{{ showMonth }}</span>
+      <label>收入：</label>
+      <span>{{ totalIncomeAmount }}</span>
+      <label>支出：</label>
+      <span>{{ totalOutlayAmount }}</span>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
+
 export default {
-  name: 'BillAnalysis'
+  name: 'BillAnalysis',
+  computed: {
+    ...mapState(['activeMonth']),
+    ...mapGetters(['totalIncomeAmount', 'totalOutlayAmount']),
+    showMonth() {
+      return !this.activeMonth ? '全部' : `${this.activeMonth} 月`
+    }
+  }
 }
 </script>
 

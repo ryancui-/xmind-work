@@ -17,7 +17,7 @@ export default new Vuex.Store({
     showBills(state) {
       let filteredBills = state.bills
       if (state.activeMonth) {
-        filteredBills = filteredBills.filter(_ => dayjs(_.time).month() === state.activeMonth)
+        filteredBills = filteredBills.filter(_ => dayjs(_.time).month() === state.activeMonth - 1)
       }
       if (state.activeCategoryId) {
         filteredBills = filteredBills.filter(_ => _.category === state.activeCategoryId)
@@ -35,6 +35,16 @@ export default new Vuex.Store({
     },
     availableMonths(state) {
       return [...new Set(state.bills.map(_ => dayjs(_.time).month()))]
+    },
+    billsByMonth(state) {
+      if (!state.activeMonth) return state.bills
+      return state.bills.filter(_ => dayjs(_.time).month() === state.activeMonth - 1)
+    },
+    totalIncomeAmount(state, getters) {
+      return getters.billsByMonth.filter(_ => BillType.isIncome(_.type)).reduce((prev, _) => prev + _.amount, 0)
+    },
+    totalOutlayAmount(state, getters) {
+      return getters.billsByMonth.filter(_ => BillType.isOutlay(_.type)).reduce((prev, _) => prev + _.amount, 0)
     }
   },
   mutations: {

@@ -16,7 +16,7 @@ import categories from '@/assets/categories.csv'
 import BillTable from '@/components/BillTable'
 import BillFilter from '@/components/BillFilter'
 import BillAnalysis from '@/components/BillAnalysis'
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'app',

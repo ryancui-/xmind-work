@@ -2,7 +2,7 @@
   <div class="bill-filter">
     <select v-model="month">
       <option :value="null">全部</option>
-      <option v-for="month in availableMonths" :key="month" :value="month">{{ month + 1 }} 月</option>
+      <option v-for="month in availableMonths" :key="month" :value="month + 1">{{ month + 1 }} 月</option>
     </select>
     <select v-model="category">
       <option :value="null">全部</option>
