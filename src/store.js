@@ -28,7 +28,7 @@ export default new Vuex.Store({
           id: `${time}_${category}_${amount}`,
           type: BillType.fromValue(type).label,
           time: dayjs(time).format('YYYY-MM-DD HH:mm:ss'),
-          category: (state.categoryMap[category] || {}).name || '-',
+          category: (state.categoryMap[category] || {}).name || '无',
           amount
         }
       })
@@ -45,6 +45,19 @@ export default new Vuex.Store({
     },
     totalOutlayAmount(state, getters) {
       return getters.billsByMonth.filter(_ => BillType.isOutlay(_.type)).reduce((prev, _) => prev + _.amount, 0)
+    },
+    outlayAnalysisByCategory(state, getters) {
+      const categorySum = {}
+      const outlayBills = getters.billsByMonth.filter(_ => BillType.isOutlay(_.type))
+      outlayBills.forEach(({ category, amount }) => {
+        const categoryName = (state.categoryMap[category] || {}).name || '无'
+        categorySum[categoryName] === undefined
+          ? categorySum[categoryName] = amount
+          : categorySum[categoryName] += amount
+      })
+      return Object.entries(categorySum)
+        .map(([key, value]) => ({ categoryName: key, total: value }))
+        .sort((a, b) => b.total - a.total)
     }
   },
   mutations: {
@@ -65,8 +78,5 @@ export default new Vuex.Store({
     ADD(state, bill) {
       state.bills.unshift(bill)
     }
-  },
-  actions: {
-
   }
 })
