@@ -2,6 +2,7 @@
   <div id="app">
     <div class="app-header">
       <bill-filter />
+      <bill-add />
     </div>
     <div class="app-body">
       <bill-table :bills="showBills" class="app-body__table" />
@@ -16,14 +17,16 @@ import categories from '@/assets/categories.csv'
 import BillTable from '@/components/BillTable'
 import BillFilter from '@/components/BillFilter'
 import BillAnalysis from '@/components/BillAnalysis'
-import { mapState, mapGetters } from 'vuex'
+import BillAdd from '@/components/BillAdd'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'app',
   components: {
     BillTable,
     BillFilter,
-    BillAnalysis
+    BillAnalysis,
+    BillAdd
   },
   computed: {
     ...mapGetters(['showBills'])

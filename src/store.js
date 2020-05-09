@@ -61,6 +61,9 @@ export default new Vuex.Store({
     },
     SET_CATEGORY_ID(state, categoryId) {
       state.activeCategoryId = categoryId
+    },
+    ADD(state, bill) {
+      state.bills.unshift(bill)
     }
   },
   actions: {
